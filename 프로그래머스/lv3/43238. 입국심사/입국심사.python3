@@ -1,0 +1,15 @@
+def solution(n, times):
+    times.sort()
+    lo,hi = 0,times[-1]*n
+    while lo!=hi:
+        mid = lo+(hi-lo)//2
+        res = 0
+        for i in range(0,len(times)):
+            res += mid // times[i]
+        if res>=n:
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+
+2628
