@@ -1,0 +1,28 @@
+def calc(A,B):
+    calc_set = set()
+    for a in A:
+        for b in B:
+            calc_set.add(a+b)
+            calc_set.add(a-b)
+            calc_set.add(a*b)
+            if b!=0:
+                calc_set.add(a//b)
+    return calc_set
+
+def solution(N, number):
+    answer = -1
+    if N==number:
+        return 1
+    caseByN = {}
+    caseByN[1]={N}
+    for i in range(2,9):
+        j = 1
+        tempByN={int(str(N)*i)}
+        while j<i:
+            tempByN.update(calc(caseByN[j],caseByN[i-j]))
+            j+=1
+        if number in tempByN:
+            answer = i
+            break
+        caseByN[i]=tempByN
+    return answer
