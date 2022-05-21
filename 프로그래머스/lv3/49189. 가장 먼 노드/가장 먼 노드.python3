@@ -1,0 +1,27 @@
+from heapq import *
+INF = float('inf')
+
+def D(start):
+    q = []
+    dist[start] = 0
+    heappush(q,(0,start))
+    while q:
+        distance,now = heappop(q)
+        if dist[now]<distance: continue
+        for nxt,n_dist in graph[now]:
+            if distance+n_dist<dist[nxt]:
+                dist[nxt] = distance+n_dist
+                heappush(q,(dist[nxt],nxt))
+    return max(dist[1:])
+
+def solution(n,edge):
+    global graph,dist
+    graph = [[] for _ in range(n+1)]
+    dist = [INF for _ in range(n+1)]
+    for e in edge:
+        graph[e[0]].append([e[1],1])
+        graph[e[1]].append([e[0],1])
+    for g in graph:
+        g.sort()
+    m = D(1)
+    return dist.count(m)
