@@ -1,0 +1,33 @@
+def solution(lines):
+    INTERVAL = 1
+    latency = 0.001
+    start_times = []
+    end_times = []
+    total = len(lines)
+    
+    for line in lines:
+        line_split = line.split()
+        time_split = line_split[1].split(':')
+        
+        seconds = float(time_split[0]) * 3600 + \
+            float(time_split[1]) * 60 + \
+            float(time_split[2])
+        delta = float(line_split[2][0:-1])
+        start_times.append(seconds - delta + latency)
+        end_times.append(seconds + INTERVAL)
+        
+    start_times.sort()
+    traffic = 0
+    max_traffic = 0
+    s_idx = 0
+    e_idx =0 
+    
+    while s_idx < total and e_idx < total:
+        if start_times[s_idx] < end_times[e_idx]:
+            traffic += 1
+            max_traffic = max(max_traffic,traffic)
+            s_idx += 1
+        else:
+            traffic -=1
+            e_idx+=1
+    return max_traffic
